@@ -10,7 +10,9 @@ spec:
   selector:
     app: mysql
   clusterIP: None
+
 ---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -18,13 +20,16 @@ metadata:
   labels:
     app: mysql
 spec:
+  storageClassName: standard
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
+
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
@@ -43,8 +48,10 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: mysql:5.6
+      - image: mysql
         name: mysql
+        args:
+          - "--default-authentication-plugin=mysql_native_password"
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: password
