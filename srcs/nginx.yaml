@@ -44,11 +44,6 @@ spec:
       containers:
       - name: nginx
         image: nginx:alpine
-        env:
-        - name: SSH_USER
-          value: estina
-        - name: SSH_PASSWORD
-          value: password
         ports:
         - containerPort: 443
           name: https

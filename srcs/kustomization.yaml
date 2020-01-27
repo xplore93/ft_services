@@ -4,7 +4,4 @@ resources:
 - mysql.yaml
 - wordpress.yaml
 - phpmyadmin.yaml
-#- ftps.yaml
-- grafana.yaml
-- influxdb.yaml
-#- telegraf.yaml
+- ftps-target.yaml
