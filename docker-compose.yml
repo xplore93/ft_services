@@ -39,3 +39,18 @@ services:
       - 5000:80
     environment:
       PMA_HOST: mysql:3306
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ./srcs/grafana/provisioning:/etc/grafana/provisioning
+      - ./srcs/grafana/dashboards:/var/lib/grafana/dashboards
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: password
+
+  influxdb:
+    image: influxdb
+    volumes:
+      - ./srcs/influx:/var/lib/influxdb
