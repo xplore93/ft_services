@@ -1,7 +1,0 @@
-resources:
-- ingress.yaml
-- nginx.yaml
-- mysql.yaml
-- wordpress.yaml
-- phpmyadmin.yaml
-- ftps-target.yaml

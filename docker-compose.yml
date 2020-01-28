@@ -1,0 +1,41 @@
+# docker stack rm ft_services
+# docker stack deploy --compose-file docker-compose.yml ft_services
+
+version: '3.7'
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./srcs/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress:
+    image: wordpress
+    ports:
+      - 5050:80
+    volumes:
+      - ./srcs/wordpress:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 5000:80
+    environment:
+      PMA_HOST: mysql:3306
