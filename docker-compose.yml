@@ -48,9 +48,36 @@ services:
       - ./srcs/grafana/provisioning:/etc/grafana/provisioning
       - ./srcs/grafana/dashboards:/var/lib/grafana/dashboards
     environment:
-      GF_SECURITY_ADMIN_PASSWORD: password
+      GF_SECURITY_ADMIN_PASSWORD: admin
 
   influxdb:
-    image: influxdb
+    image: influxdb:alpine
+    environment:
+      INFLUXDB_DB: telegraf
+      INFLUXDB_USER: admin
+      INFLUXDB_USER_PASSWORD: admin
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: admin
     volumes:
-      - ./srcs/influx:/var/lib/influxdb
+      - ./srcs/influxdb:/var/lib/influxdb/
+
+  telegraf:
+    image: telegraf
+    environment:
+      INFLUXDB_USER: admin
+      INFLUXDB_USER_PASSWORD: admin
+      INFLUXDB_DB: telegraf
+      INFLUXDB_URL: http://influxdb:8086
+    volumes:
+      - ./srcs/telegraf:/etc/telegraf/
+
+  ftps:
+    image: mikatux/ftps-server
+    volumes:
+      - ./srcs:/home/admin
+    environment:
+      USER: admin
+      PASSWORD: admin
+    ports:
+      - "21:21"
+      - "3001-3005:3001-3005"
