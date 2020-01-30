@@ -10,3 +10,4 @@ spec:
         backend:
           serviceName: nginx-published
           servicePort: 80
+          

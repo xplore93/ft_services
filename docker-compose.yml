@@ -4,15 +4,11 @@
 version: '3.7'
 
 services:
-  nginx:
-    image: nginx:alpine
-    ports:
-      - 80:80
-      - 443:443
-
   mysql:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
     volumes:
       - ./srcs/mysql:/var/lib/mysql
     environment:
@@ -81,3 +77,13 @@ services:
     ports:
       - "21:21"
       - "3001-3005:3001-3005"
+    volumes:
+      - ./srcs/ftps/ftps.crt:/etc/ssl/certs/ftps.crt
+      - ./srcs/ftps/ftps.key:/etc/ssl/private/ftps.key
+
+  nginx:
+    image: iliyan/docker-nginx-sshd
+    ports:
+      - 80:80
+      - 443:443
+      - 23:22
