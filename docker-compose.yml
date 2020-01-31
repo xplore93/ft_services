@@ -68,21 +68,21 @@ services:
       - ./srcs/telegraf:/etc/telegraf/
 
   ftps:
-    image: mikatux/ftps-server
+    image: gonzsanch/ftps-alpine
     volumes:
       - ./srcs:/home/admin
     environment:
-      USER: admin
-      PASSWORD: admin
+      FTP_USER: admin
+      FTP_PASSWORD: admin
     ports:
       - "21:21"
-      - "3001-3005:3001-3005"
-    volumes:
-      - ./srcs/ftps/ftps.crt:/etc/ssl/certs/ftps.crt
-      - ./srcs/ftps/ftps.key:/etc/ssl/private/ftps.key
+      - "15477:15477"
 
   nginx:
-    image: iliyan/docker-nginx-sshd
+    image: gonzsanch/nginx-ssh-alpine
+    environment:
+      SSH_USER: admin
+      SSH_PASSWORD: admin
     ports:
       - 80:80
       - 443:443
